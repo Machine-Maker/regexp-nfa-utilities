@@ -13,6 +13,12 @@ class RegexToken(ABC):
 
     def _wrap(self, string_rep: str) -> str:
         return f"({string_rep})" if self._parens else string_rep
+    
+    def isLiteralToken(self) -> bool:
+        return False
+    
+    def isOperatorToken(self) -> bool:
+        return False
 
 
 class LiteralToken(RegexToken):
@@ -21,6 +27,9 @@ class LiteralToken(RegexToken):
 
     def __repr__(self):
         return self._wrap(self._id)
+    
+    def isLiteralToken(self) -> bool:
+        return True
 
 
 class OperatorToken(RegexToken, metaclass=ABCMeta):
@@ -28,6 +37,15 @@ class OperatorToken(RegexToken, metaclass=ABCMeta):
     @abstractmethod
     def consume_operands(self, operands: List[RegexToken]):
         ...
+        
+    def isOperatorToken(self) -> bool:
+        return True
+    
+    def isUnaryOperatorToken(self) -> bool:
+        return False
+    
+    def isBinaryOperatorToken(self) -> bool:
+        return False
 
 
 class UnaryOperatorToken(OperatorToken, metaclass=ABCMeta):
@@ -44,6 +62,12 @@ class UnaryOperatorToken(OperatorToken, metaclass=ABCMeta):
             raise Exception(f"The {self._id} operator expects 1 operands, found {len(operands)}")
         self.target = operands.pop()
         operands.append(self)
+        
+    def isUnaryOperatorToken(self) -> bool:
+        return True
+    
+    def isKleeneStarToken(self) -> bool:
+        return False
 
 
 class BinaryOperatorToken(OperatorToken, metaclass=ABCMeta):
@@ -62,6 +86,24 @@ class BinaryOperatorToken(OperatorToken, metaclass=ABCMeta):
         self.right = operands.pop()
         self.left = operands.pop()
         operands.append(self)
+        
+    def getLeft(self) -> RegexToken:
+        return self.left
+    
+    def getRight(self) -> RegexToken:
+        return self.right
+        
+    def isBinaryOperatorToken(self) -> bool:
+        return True
+    
+    def isConcatToken(self) -> bool:
+        return False
+    
+    def isUnionToken(self) -> bool:
+        return False
+    
+    def isIntersectionToken(self) -> bool:
+        return False
 
 
 class ConcatToken(BinaryOperatorToken):
@@ -70,18 +112,30 @@ class ConcatToken(BinaryOperatorToken):
 
     def __repr__(self):
         return self._wrap(f"{self.left}{self._id}{self.right}")
+    
+    def isConcatToken(self) -> bool:
+        return True
 
 
 class UnionToken(BinaryOperatorToken):
     def __init__(self):
         super().__init__("∪")
+        
+    def isUnionToken(self) -> bool:
+        return True
 
 
 class IntersectionToken(BinaryOperatorToken):
     def __init__(self):
         super().__init__("∩")
+        
+    def isIntersectionToken(self) -> bool:
+        return True
 
 
 class KleeneStarToken(UnaryOperatorToken):
     def __init__(self):
         super().__init__("*")
+        
+    def isKleeneStarToken(self) -> bool:
+        return True

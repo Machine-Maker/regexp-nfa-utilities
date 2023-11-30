@@ -19,3 +19,4 @@ class StateToken:
                 destinations.append(self.__transitions[i][1])
                 
         return None if len(destinations) == 0 else destinations
+    

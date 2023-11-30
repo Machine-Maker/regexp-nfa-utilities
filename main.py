@@ -1,4 +1,5 @@
 from regexp.parser import RegexParser
+from e_nfa.e_nfa_parser import EpsilonNFAParser
 
 
 def run():
@@ -8,6 +9,10 @@ def run():
     parser = RegexParser(re)
     final_token = parser.parse()
     print(final_token)
+    enfaParser = EpsilonNFAParser(final_token)
+    enfa = enfaParser.parse()
+    enfa.printENFA()
+    
 
 
 if __name__ == "__main__":

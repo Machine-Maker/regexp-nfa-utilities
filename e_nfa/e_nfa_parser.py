@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from regexp.tokens import RegexToken, LiteralToken, ConcatToken, UnionToken, IntersectionToken, KleeneStarToken
 from e_nfa.e_nfa import Regex_E_NFA
 from e_nfa.state import StateToken
@@ -103,4 +104,4 @@ class EpsilonNFAParser:
         else:
             raise Exception(f"Unexpected {regexp_t}, Not an Operator or Literal")  
             
-        
+ 

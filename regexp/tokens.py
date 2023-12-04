@@ -30,6 +30,9 @@ class LiteralToken(RegexToken):
     
     def isLiteralToken(self) -> bool:
         return True
+            
+    def getid(self):
+        return self._id
 
 
 class OperatorToken(RegexToken, metaclass=ABCMeta):

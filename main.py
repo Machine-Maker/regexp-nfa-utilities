@@ -16,7 +16,7 @@ def run():
     print(enfa.startState)
     print(enfa.acceptingStates)
     print(enfa.transitions)
-    
+
 
 if __name__ == "__main__":
     run()

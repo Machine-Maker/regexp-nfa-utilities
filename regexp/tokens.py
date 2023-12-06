@@ -72,18 +72,6 @@ class BinaryOperatorToken(OperatorToken, metaclass=ABCMeta):
     def getRight(self) -> RegexToken:
         return self.right
 
-    def isBinaryOperatorToken(self) -> bool:
-        return True
-
-    def isConcatToken(self) -> bool:
-        return False
-
-    def isUnionToken(self) -> bool:
-        return False
-
-    def isIntersectionToken(self) -> bool:
-        return False
-
 
 class ConcatToken(BinaryOperatorToken):
     def __init__(self):
@@ -91,9 +79,6 @@ class ConcatToken(BinaryOperatorToken):
 
     def __repr__(self):
         return self._wrap(f"{self.left}{self._id}{self.right}")
-
-    def isConcatToken(self) -> bool:
-        return True
 
 
 class UnionToken(BinaryOperatorToken):

@@ -18,6 +18,8 @@ class State:
         current_label += 1
 
     def add_transition(self, literal: chr, to_state: State):
+        assert(to_state is not None)
+        assert(literal is not None)
         if literal not in self.transitions:
             self.transitions[literal] = {to_state}
         else:
@@ -53,15 +55,30 @@ def compute_pairs(*lists):
 def parse_intersection_token(token: IntersectionToken) -> NFA:
     left = parse_regex_token(token.left)
     right = parse_regex_token(token.right)
-    left_states = left.collect_states()
-    right_states = right.collect_states()
-    language: set[chr] = set([literal for state in left_states for literal in state.transitions.keys()])
-    language = language.union(set([literal for state in right_states for literal in state.transitions.keys()]))
-    product_states = [(pair, State()) for pair in compute_pairs(left_states, right_states)]
-    print(product_states)
-    for ((left_state, right_state), state) in product_states:
-        print(left_state, right_state, state)
-    raise Exception("Not implemented.")
+    left_states = left.collect_reachable_states()
+    right_states = right.collect_reachable_states()
+    product_states = { pair:State() for pair in compute_pairs(left_states, right_states) }
+    initial_state = None
+    accepting_states = set()
+    for ((left_state, right_state), state) in product_states.items():
+        if left_state is left.initial and right_state is right.initial:  # the initial state is the state that makes up the pair of initial states in the original NFAs
+            assert(initial_state is None)  # only 1 state should meet this criteria
+            initial_state = state
+        if left_state in left.accepting and right_state in right.accepting:  # the accepting states are all states whose pairs are in the accepting states of the original NFAs
+            accepting_states.add(state)
+        common_symbols = set(left_state.transitions.keys()).intersection(set(right_state.transitions.keys()))  # all output symbols for the 2 states (handle EPSILON separately)
+        common_symbols.discard(EPSILON)
+        for symbol in common_symbols:
+            for (next_left_state, next_right_state) in compute_pairs(left_state.transitions[symbol], right_state.transitions[symbol]):
+                state.add_transition(symbol, product_states[(next_left_state, next_right_state)])
+        if EPSILON in left_state.transitions.keys() or EPSILON in right_state.transitions.keys():
+            for (next_left_state, next_right_state) in compute_pairs(left_state.transitions.get(EPSILON, set()).union({left_state}), right_state.transitions.get(EPSILON, set()).union({right_state})):
+                state.add_transition(EPSILON, product_states[(next_left_state, next_right_state)])
+    #     print("="*20)
+    # print(f"initial: {initial_state}")
+    # print(f"accepting: {accepting_states}")
+    return NFA(initial_state, accepting_states)
+    # raise Exception("Not implemented.")
 
 def parse_concat_token(token: ConcatToken) -> NFA:
     left = parse_regex_token(token.left)
@@ -122,7 +139,7 @@ class NFA:
         self.initial = initial
         self.accepting = accepting
 
-    def collect_states(self) -> set[State]:
+    def collect_reachable_states(self) -> set[State]:
         states: set[State] = set()
         stack: list[State] = [self.initial]
         while len(stack) > 0:

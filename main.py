@@ -11,7 +11,7 @@ def run():
     final_token = parser.parse()
     print(final_token)
     nfa = parse_regex_token(final_token)
-    print(nfa.collect_states())
+    print("reachable states", nfa.collect_reachable_states())
     print(nfa)
 
 

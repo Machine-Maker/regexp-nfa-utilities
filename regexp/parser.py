@@ -37,9 +37,9 @@ class RegexParser:
             elif c.isalnum():
                 self.operands.append(LiteralToken(c))
             else:
-                raise Exception(f"Unexpected '{c}' found in {self.regexp}")
+                raise Exception(f"Unexpected {c} found in {self.regexp}")
 
-        if len(self.operators) == 1:  # there will sometimes be 1 single operator left that needs to be applied
+        while len(self.operators) > 0: # consume all the remaning operators
             self._apply_last_operator()
 
         if len(self.operators) != 0 or (not self.empty and len(self.operands) != 1):
@@ -54,7 +54,17 @@ class RegexParser:
 
     # returns the number to skip on the parent regular expression string
     def _process_paren_group(self, start: int) -> int:
-        end = self.regexp.rfind(')')  # the matching paren should be the last one from the end
+        count = 0
+        end = -1
+        for i, c in enumerate(self.regexp[start:]):
+            if c == '(':
+                count += 1
+            elif c == ')':
+                assert(count > 0)
+                count -= 1
+                if count == 0:
+                    end = start + i
+                    break
         if end == -1:
             raise Exception(f"Mismatched parentheses found in {self.regexp}")
         sub_parser = RegexParser(self.regexp[start + 1:end])

@@ -8,6 +8,7 @@ current_label = 65
 class State:
     _label: chr
     transitions: dict[chr, set[State]]
+    epsilon_closure: set()
 
     def __init__(self):
         global current_label
@@ -15,6 +16,7 @@ class State:
             raise Exception("Cannot create more than 26 labels with labels enabled")
         self._label = chr(current_label)
         self.transitions = {}
+        self.epsilon_closure = ()
         current_label += 1
 
     def add_transition(self, literal: chr, to_state: State):
@@ -138,19 +140,109 @@ class NFA:
     def __init__(self, initial: State, accepting: set[State]):
         self.initial = initial
         self.accepting = accepting
+        self.states = set()
 
     def collect_reachable_states(self) -> set[State]:
-        states: set[State] = set()
+        #states: set[State] = set()
         stack: list[State] = [self.initial]
         while len(stack) > 0:
             state = stack.pop()
-            states.add(state)
+            self.states.add(state)
             for (literal, next_states) in state.transitions.items():
                 for next_state in next_states:
-                    if next_state not in states:
+                    if next_state not in self.states:
                         stack.append(next_state)
-        return states
+        return self.states #promoted states to class member.
 
+    # ----------   
+    # Jordan's Code #
+    # CONVERT ε-NFA to εfree-NFA
+    #
+    # ForEach NFA State:
+    # 1. determine epsilon closure                ~ following ε-transitions alone find set of states reachable. Includes the state itself.
+    # 2. build new transition set:
+    #       2a. copy transitions to current state from its e-clo members. Since the state itself exists in its e-clo, its non ε-transitions will be maintained as expected.
+    #       2b. new set ignores ε-transitions which acts as their removal step
+    # 
+    # Then:
+    #    update accepting states: If a state leads to a final(accepting) state on an ε-transition, it should become a final state itself by inheritance on the epsilon move.
+    # ----------
+
+    # the following functions run this process for each state in the NFA
+    
+    # Step 1. determine epsilon closures
+    def determine_epsilon_closures(self):
+        # iterate over states
+        for state in self.states:
+            epsilon_closure = set() # temporary set for building state.eCLO
+            visited_states = set()
+
+             # recursive function dfs: (depth first search)
+             # adds destination_state(s) of 'ε' current_state.transitions
+             # to current_state.epsilon_closure
+            def dfs(current_state):
+                visited_states.add(current_state)
+                epsilon_closure.add(current_state)
+
+                for destination_state in current_state.transitions.get('ε', []):
+                    if destination_state not in visited_states:
+                        dfs(destination_state)
+
+            dfs(state)
+            state.epsilon_closure = epsilon_closure
+
+
+    # Step 2. build new transitions
+    def build_transitions_from_epsilon_closure(self):
+        for state in self.states:
+            new_transitions = {} # temporary set for building new transitions
+
+            # Iterate over the current state's e-CLO
+            # create new transitions for current state based on the transitions from its epsilon-reachable states
+            for epsilon_reachable_state in state.epsilon_closure:
+                for symbol, destination in epsilon_reachable_state.transitions.items():
+                    if symbol != 'ε':
+                        new_transitions.update(epsilon_reachable_state.transitions) # copy into current state
+
+            # Update the transitions for the current state
+            state.transitions = new_transitions
+
+    # Step 3. 
+    def update_accepting_states_from_epsilon_closure(self):
+        # iterate over states
+        for state in self.states:
+            # Check each state in its epsilon closure
+            for epsilon_reachable_state in state.epsilon_closure:
+                # If the epsilon closure state is in the set of accepting states
+                if epsilon_reachable_state in self.accepting:
+                    # This state becomes an accepting state by inheritance
+                    self.accepting.add(state)
+
+    # Composite Convert Function
+    # call from main.py
+    def convert_e_to_efree(self):
+        self.determine_epsilon_closures()
+        self.build_transitions_from_epsilon_closure()
+        self.update_accepting_states_from_epsilon_closure()
+
+    # Print Functions
+    # print Epsilon Closures Table
+    def print_epsilon_closure_table(self):
+        print(f"\nEpsilon Closures Table")
+        for state in self.states:
+                # gather eCLO state label strings for output
+                epsilon_closure_labels = [s._label for s in state.epsilon_closure]
+                print(f"εCLO[{state._label}]: {', '.join(epsilon_closure_labels)}")
+        print("")
+
+
+    # End Jordan's Code #
+        
+
+
+
+
+    # print function
     def __repr__(self):
         s = f"initial: {self.initial}"
         s+= f"\naccepting: {{ {', '.join(map(str, self.accepting))} }}"
@@ -167,4 +259,4 @@ class NFA:
                     s += f"\n\t{literal} -> {next_state}"
                     if next_state not in visited:
                         stack.append(next_state)
-        return s
+        return s# the following functions run this process for each state in the NFA

@@ -260,4 +260,4 @@ class NFA:
                     s += f"\n\t{literal} -> {next_state}"
                     if next_state not in visited:
                         stack.append(next_state)
-        return s# the following functions run this process for each state in the NFA
+        return s

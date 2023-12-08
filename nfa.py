@@ -136,6 +136,7 @@ def parse_regex_token(token: RegexToken) -> NFA:
 class NFA:
     initial: State
     accepting: set[State]
+    states: set[State]
 
     def __init__(self, initial: State, accepting: set[State]):
         self.initial = initial

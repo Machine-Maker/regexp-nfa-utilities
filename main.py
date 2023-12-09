@@ -2,7 +2,7 @@ from regexp.parser import RegexParser
 from nfa import parse_regex_token
 from e_nfa.e_nfa_2 import Epsilon_NFA
 from membership_test.generate_random_regex import generate_random_regex
-from membership_test.membership_test import test_regex_from_csv
+from membership_test.membership_test import test_regex_from_csv, prompt_and_test_membership
 import sys
 
 
@@ -37,6 +37,8 @@ def script_mode():
     nfa.convert_e_to_efree()
     nfa.print_epsilon_closure_table()
     print(nfa)
+
+    prompt_and_test_membership(re,nfa)
 
 def menu_mode():
     while True:
@@ -89,6 +91,7 @@ def run_regex_test1(re):
     nfa.convert_e_to_efree()
     nfa.print_epsilon_closure_table()
     print(nfa)
+    prompt_and_test_membership(re,nfa)
 
 def printMenuSlide():
     print("\n╔══════════════════════════════╗")

@@ -30,7 +30,9 @@ def isMember(nfa: NFA, input_string: str) -> bool:
         return False
     
 # prompt and test
-def prompt_and_test_nfa(nfa: NFA):
+def prompt_and_test_membership(re, nfa: NFA):
+    print("::Testing::")
+    print(re)
     while True:
         input_string = input("Enter a test string (or type 'exit' to stop): ")
         if input_string.lower() == 'exit':
@@ -38,9 +40,9 @@ def prompt_and_test_nfa(nfa: NFA):
             break
 
         if isMember(nfa, input_string):
-            print(f"Yes: the string '{input_string}' is in the language.")
+            print(f"'{input_string}': Yes, the string is in the language.")
         else:
-            print(f"No: the string '{input_string}' is not in the language.")
+            print(f"'{input_string}': No, the string  is not in the language.")
 
 
 def parse_csv(file_path):

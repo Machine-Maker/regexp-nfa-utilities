@@ -1,6 +1,7 @@
 from regexp.parser import RegexParser
 from nfa import parse_regex_token
 from e_nfa.e_nfa_2 import Epsilon_NFA
+from utils import insert_implicit_concatenation
 from membership_test.generate_random_regex import generate_random_regex
 from membership_test.membership_test import test_regex_from_csv, prompt_and_test_membership
 import sys
@@ -26,6 +27,7 @@ def script_mode():
     re = input("Enter a regular expression "
                "(valid operators are '*', '.', '∪', and '∩'; valid literals are all alphanumerics)"
                ": ")
+    re = insert_implicit_concatenation(re)
     parser = RegexParser(re)
     final_token = parser.parse()
     print(final_token)

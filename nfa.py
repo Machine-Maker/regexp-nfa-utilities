@@ -3,7 +3,6 @@ from regexp.tokens import RegexToken, UnaryOperatorToken, BinaryOperatorToken, O
 from itertools import combinations, product
 
 EPSILON = 'ε'
-
 current_label = 65
 class State:
     _label: chr
@@ -12,9 +11,12 @@ class State:
 
     def __init__(self):
         global current_label
-        if current_label > 65 + 26:
-            raise Exception("Cannot create more than 26 labels with labels enabled")
-        self._label = chr(current_label)
+        if current_label > 64 + 26:
+            order = int((current_label-64) // 26)
+            self._label = chr((current_label - 64) % 26 + 64) + str(order+1)
+            # raise Exception("Cannot create more than 26 labels with labels enabled")
+        else:
+            self._label = chr(current_label)
         self.transitions = {}
         self.epsilon_closure = ()
         current_label += 1
@@ -198,12 +200,18 @@ class NFA:
         for state in self.states:
             new_transitions = {} # temporary set for building new transitions
 
-            # Iterate over the current state's e-CLO
+            # Iterate over the current state's ε-CLO
             # create new transitions for current state based on the transitions from its epsilon-reachable states
             for epsilon_reachable_state in state.epsilon_closure:
-                for symbol, destination in epsilon_reachable_state.transitions.items():
-                    if symbol != 'ε':
-                        new_transitions.update(epsilon_reachable_state.transitions) # copy into current state
+                for symbol, states in epsilon_reachable_state.transitions.items():
+                    if symbol == 'ε':
+                        continue
+                    if symbol in new_transitions:
+                        # If the symbol key exists, add the new states to the existing set
+                        new_transitions[symbol] = new_transitions[symbol].union(states)
+                    else:
+                        # If the symbol key does not exist, create a new set with these states
+                        new_transitions[symbol] = set(states)
 
             # Update the transitions for the current state
             state.transitions = new_transitions
@@ -236,14 +244,9 @@ class NFA:
                 print(f"εCLO[{state._label}]: {', '.join(epsilon_closure_labels)}")
         print("")
 
-
     # End Jordan's Code #
         
-
-
-
-
-    # print function
+     # print function
     def __repr__(self):
         s = f"initial: {self.initial}"
         s+= f"\naccepting: {{ {', '.join(map(str, self.accepting))} }}"

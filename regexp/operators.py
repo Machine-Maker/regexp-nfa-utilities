@@ -2,8 +2,11 @@ from typing import List, Callable
 from regexp.tokens import OperatorToken, KleeneStarToken, ConcatToken, UnionToken, IntersectionToken
 
 BINARY_OPERATOR_PRECEDENCE: List[List[str]] = [
+    # parens
+    # kleene star
     ["."],
-    ["∪", "∩"]
+    ["∩"],
+    ["∪"]
 ]
 
 BINARY_OPERATOR_TOKEN_FACTORIES: dict[str, Callable[[], OperatorToken]] = {

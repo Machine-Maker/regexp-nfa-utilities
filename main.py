@@ -57,6 +57,8 @@ def menu_mode():
 
             if csv_choice == '1':
                 csv_file = 'membership_test/small_sample/dataset1/dataset1.csv'
+            elif csv_choice == '2':
+                csv_file = 'membership_test/real_data/dataset1/dataset1.csv'
             else:
                 print("Invalid key input.")
                 continue
@@ -68,7 +70,7 @@ def menu_mode():
                 test_regex_from_csv(csv_file, False)
             pass
         elif choice == '3': # randomly generate re string
-            num_operators = int(input("Enter the number of operators(recommended: 8): "))
+            num_operators = int(input("Enter the number of operators(recommended: 5): "))
             alphabet_letters = input("Enter the letters in the alphabet (e.g., 'abcd'): ")
             re = generate_random_regex(num_operators, alphabet_letters)
             print(f"Randomly Generated Regular Expression: {re}")
@@ -108,6 +110,7 @@ def printCSVSlide():
     print("║      Choose a CSV file       ║")
     print("╠══════════════════════════════╣")
     print("║ 1. Small Sample 1            ║")
+    print("║ 2. 50char dataset            ║")
     print("╚══════════════════════════════╝")
 
 if __name__ == "__main__":

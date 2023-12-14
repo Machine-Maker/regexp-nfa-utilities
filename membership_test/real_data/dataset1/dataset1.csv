@@ -1,0 +1,4 @@
+Regex,Test String,Accepts
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaac,Yes
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaacc,Yes
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaa,No

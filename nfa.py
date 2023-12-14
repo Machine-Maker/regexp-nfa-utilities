@@ -13,7 +13,7 @@ class State:
         global current_label
         if current_label > 64 + 26:
             order = int((current_label-64) // 26)
-            self._label = chr((current_label - 64) % 26 + 64) + str(order+1)
+            self._label = chr((current_label - 64) % 26 + 65) + str(order+1)
             # raise Exception("Cannot create more than 26 labels with labels enabled")
         else:
             self._label = chr(current_label)
@@ -210,10 +210,10 @@ class NFA:
                         # If the symbol key exists, add the new states to the existing set
                         new_transitions[symbol] = new_transitions[symbol].union(states)
                     else:
-                        # If the symbol key does not exist, create a new set with these states
+                        # If the symbol key does not exist, create a new set with these states for transition[symbol,set(states)]
                         new_transitions[symbol] = set(states)
 
-            # Update the transitions for the current state
+            # Update the transitions for the current state, ε-transitions have now been excluded
             state.transitions = new_transitions
 
     # Step 3. 
@@ -246,7 +246,7 @@ class NFA:
 
     # End Jordan's Code #
         
-     # print function
+     # natural print function for class NFA
     def __repr__(self):
         s = f"initial: {self.initial}"
         s+= f"\naccepting: {{ {', '.join(map(str, self.accepting))} }}"

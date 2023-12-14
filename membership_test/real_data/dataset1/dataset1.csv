@@ -1,4 +1,10 @@
 Regex,Test String,Accepts
 (((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaac,Yes
-(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaacc,Yes
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),cc,Yes
 (((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccaaaaaa,No
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a),ccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),computer,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),computerscomputerscomputers,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),c,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooompute,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooomputer,No

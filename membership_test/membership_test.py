@@ -42,7 +42,7 @@ def prompt_and_test_membership(re, nfa: NFA):
         if isMember(nfa, input_string):
             print(f"'{input_string}': Yes, the string is in the language.")
         else:
-            print(f"'{input_string}': No, the string  is not in the language.")
+            print(f"'{input_string}': No, the string is not in the language.")
 
 
 def parse_csv(file_path):

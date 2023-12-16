@@ -9,7 +9,7 @@ It provides an interface for testing of string memberships in the Language defin
 </p>
 
 **How It Works**:
-NFA is created from parsed user input based on construction algorithim. It is then processed into a deterministic model for string membership testing.
+NFA is created from parsed user input based on construction algorithim. It is then processed into a deterministic model for testing.
 <p>
 <img width="150" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/fbe97717-3797-41c8-af2f-bb7cc6aba806">
 <img width="180" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/2e5dff71-24f0-4918-8d0f-2361c79110be">

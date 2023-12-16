@@ -3,7 +3,7 @@
 A Project to parse a simplified Regular Expression into an NFA data structure and convert to epsilon-free NFA.
 It provides an interface for testing of string memberships in the Language defined by a Regular Expression.
 
-<img width="846" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/e545426b-ca0c-4cdc-a722-ca8bd639f0d6">
+<img width="600" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/e545426b-ca0c-4cdc-a722-ca8bd639f0d6">
 
 
 **How It Works**:

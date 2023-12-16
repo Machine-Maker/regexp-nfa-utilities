@@ -78,10 +78,9 @@ The program should serve as a basic implementation, that can be optimized for va
 ## Acknowledgements
 
 Dr. Ravi
+Sonoma State University
 
 ## License
 
 This project uses the MIT Open Source License.
 =======
-Design Doc - Probably not that useful
-https://docs.google.com/document/d/1tWiAd6sdG_nlba4SMwqguRaVR073G5wQG7L6K2hbgPU/edit

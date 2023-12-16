@@ -41,7 +41,7 @@ Example:
 
 ## Program Options
 
-1. Run python main.py optionally with the argument main.py menu for a simple CommandLine Menu.
+1. Run python main.py optionally with the argument **main.py menu** for a simple CommandLine Menu.
 2. Test RegEx expressions and sets of test strings from 3 options:
 .csv, user input, or a randomly generated
 3. The csv dataset in ./membership_test/small_sample/dataset1 should illustrate the fundamental patterns the program recognizes. The format of csv input should be fairly recognizeable as a RegEx followed by a series of test strings, the expected outcome of the test and providing for comment lines.

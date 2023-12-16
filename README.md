@@ -1,6 +1,7 @@
 # regexp-nfa-utilities
 A Project to parse a simplified Regular Expression, convert to epsilon-free NFAs and test membership
 
+=======COMPLETE README CAN BE FOUND IN README2.md=======
 
 I redid the Epsilon NFA data structure and the parser.
 It works, you can check it out. Run Main.

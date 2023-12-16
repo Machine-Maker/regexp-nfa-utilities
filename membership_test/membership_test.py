@@ -1,7 +1,7 @@
 from nfa import NFA
 from regexp.parser import RegexParser
 from nfa import parse_regex_token
-import csv
+import csv, textwrap
 
 # membership_test
 
@@ -45,15 +45,26 @@ def prompt_and_test_membership(re, nfa: NFA):
             print(f"'{input_string}': No, the string is not in the language.")
 
 
+# returns a tuple with a parsed row and a label if it has one
 def parse_csv(file_path):
-    patterns = []
+    patterns_with_labels = []
+    current_label = None
+    current_regex = None
+
     with open(file_path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            if row and row[0] != 'Regex' and row[0] != 'Test String,Accepts':
-                regex, test_string, expected_result = row
-                patterns.append((regex, test_string, expected_result == 'Yes'))
-    return patterns
+            # Check if the row is a label/description
+            first_cell = row[0].strip()
+            if first_cell.startswith('('):  # This row is a regex
+                current_regex = first_cell
+            elif row and row[0].startswith('#'):
+                current_label = row[0][1:].strip()  # Store the label
+            else:
+                test_string, expected_result = row
+                patterns_with_labels.append((current_label, (current_regex,test_string, expected_result == 'Yes')))
+                current_label = None  # Reset the label memory after attaching it to a pattern
+    return patterns_with_labels
 
 def run_single_test(nfa, regex, test_string, expected, show_details=False):
     actual = isMember(nfa, test_string)
@@ -62,20 +73,31 @@ def run_single_test(nfa, regex, test_string, expected, show_details=False):
     else:
         result = "✗"
 
-    if show_details or result == "✗":
-        print(f"Result: {result} | String: '{test_string}', Expected: {expected}, Found: {actual}")
+    # Check if test_string is longer than 20 characters
+    if len(test_string) > 20:
+        wrapped_string = textwrap.fill(test_string, width=20)
+        test_string_display = "\n'" + wrapped_string + "'"
     else:
-        print(f"Result: {result} | String: '{test_string}'")
+        test_string_display = f"'{test_string}'"
+
+    if show_details or result == "✗":
+        print(f"Result: {result} | String: {test_string_display}, Expected: {expected}, Found: {actual}")
+    else:
+        print(f"Result: {result} | String: {test_string_display}")
 
 
 def test_regex_from_csv(filePath, show_details=False):
-    patterns = parse_csv(filePath)
+    patterns_with_labels = parse_csv(filePath)
     last_regex = None
     nfa = None
 
-    for regex, test_string, expected in patterns:
+    for label, (regex, test_string, expected) in patterns_with_labels:
+
+        # Process the regex pattern
         if regex != last_regex:
-            print(regex)
+            print('\n'+'Testing RegEx:\n'+regex)
+            print(label+'\n')
+            label = None
             parser = RegexParser(regex)
             final_token = parser.parse()
             nfa = parse_regex_token(final_token)
@@ -84,3 +106,7 @@ def test_regex_from_csv(filePath, show_details=False):
             last_regex = regex
 
         run_single_test(nfa, regex, test_string, expected, show_details)
+
+        # Print the label if present
+        if label:
+            print(label)

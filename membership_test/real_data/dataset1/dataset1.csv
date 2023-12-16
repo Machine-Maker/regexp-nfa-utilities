@@ -1,0 +1,14 @@
+(((c*.a*).a∪c).(b∪c∪c*))∩(((c*.a*).a∪c).c∪a)
+# Should accept an intersection of c*a* ended by a common c from the common appended union (appended via concat)
+ccccaaaaaac,Yes
+cc,Yes
+# ^Test Description: Doesn't satisfy the left hand operand of the intersection because we need to satisfy (b∪c∪c*)
+ccccaaaaaa,No
+ccccccccccccccccccccccccccccccccccccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac,Yes
+((c∪c.((o*.m.p).(u.t.e∪r)))∪(c.o.m.p.u.t.e.r.s)*)∪(c.o.m.p.u.t.e.r),
+# Should accept c || co*mp.ute || co*mpr || computers* || computer
+computer,Yes
+computerscomputerscomputers,Yes
+c,Yes
+cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooompute,Yes
+cooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooomputer,No

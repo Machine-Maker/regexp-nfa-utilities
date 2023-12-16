@@ -1,35 +1,44 @@
-Regex,Test String,Accepts
-(a ∪ b)*.a.b.b,abb,Yes
-(a ∪ b)*.a.b.b,aabb,Yes
-(a ∪ b)*.a.b.b,bababb,Yes
-(a ∪ b)*.a.b.b,bbabb,Yes
-(a ∪ b)*.a.b.b,abba,No
-(a ∪ b)*.a.b.b,aab,No
-(a ∪ b)*.a.b.b,bcabb,No
-(a.(b.b)*) ∪ c,a,Yes
-(a.(b.b)*) ∪ c,abb,Yes
-(a.(b.b)*) ∪ c,abbbb,Yes
-(a.(b.b)*) ∪ c,c,Yes
-(a.(b.b)*) ∪ c,ba,No
-(a.(b.b)*) ∪ c,abbc,No
-(a.(b.b)*) ∪ c,acc,No
-(a.(b.b)*) ∪ c,acbbbbca,No
-(a ∪ b)*.c.(d ∪ e.f)*.g,acg,Yes
-(a ∪ b)*.c.(d ∪ e.f)*.g,bcdefg,Yes
-(a ∪ b)*.c.(d ∪ e.f)*.g,abcdefg,Yes
-(a ∪ b)*.c.(d ∪ e.f)*.g,acefg,Yes
-(a ∪ b)*.c.(d ∪ e.f)*.g,acdef,No
-(a ∪ b)*.c.(d ∪ e.f)*.g,abcd,No
-(a ∪ b)*.c.(d ∪ e.f)*.g,aefg,No
-(ε ∪ a).b*,"",Yes
-(ε ∪ a).b*,b,Yes
-(ε ∪ a).b*,ab,Yes
-(ε ∪ a).b*,abb,Yes
-(ε ∪ a).b*,a,Yes
-(ε ∪ a).b*,ba,No
-(ε ∪ a).b*,aab,No
-a ∪ (b ∩ b) ∪ c,b,Yes
-a ∪ (b ∩ b) ∪ c,a,Yes
-a ∪ (b ∩ b) ∪ c,c,Yes
-a ∪ (b ∩ b) ∪ c,bc,No
-a ∪ (b ∩ b) ∪ c,ab,No
+(a ∪ b)*.a.b.b
+# Simple Concatenation and Union
+aabb,Yes
+abb,Yes
+bababb,Yes
+bbabb,Yes
+abba,No
+aab,No
+bcabb,No
+(a.(b.b)*) ∪ c
+# Nested Groups and Kleene Star
+a,Yes
+abb,Yes
+abbbb,Yes
+c,Yes
+ba,No
+abbc,No
+acc,No
+acbbbbca,No
+(a ∪ b)*.c.(d ∪ e.f)*.g
+# Complex Expression with * ∪ .
+acg,Yes
+bcdefg,Yes
+abcdefg,Yes
+acefg,Yes
+acdef,No
+abcd,No
+aefg,No
+(ε ∪ a).b*
+# Expression with ε and Union
+"",Yes
+b,Yes
+ab,Yes
+abb,Yes
+a,Yes
+ba,No
+aab,No
+(a ∪ (b ∩ b) ∪ c)
+# Simple Intersection
+b,Yes
+a,Yes
+c,Yes
+bc,No
+ab,No

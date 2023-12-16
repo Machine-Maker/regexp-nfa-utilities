@@ -5,6 +5,7 @@ It provides an interface for testing of string memberships in the Language defin
 
 <img width="846" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/e545426b-ca0c-4cdc-a722-ca8bd639f0d6">
 
+
 **How It Works**:
 Epsilon NFA is created with State, transition, and symbol information based on construction algorithim. The state information is then processed iteratively to remove epsilon transitions into a deterministic model for string membership testing.
 

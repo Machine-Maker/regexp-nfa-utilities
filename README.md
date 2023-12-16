@@ -54,7 +54,6 @@ Example:
         └── parser.py      - parses user input into RegEx
         main.py            - main program loop in run()
         nfa.py             - NFA class, State class, and functions
-        main.cpp           - main program, setup and draw UI, connect to mysql
 ```
 ## Importance of RegEx and Language Membership
 * Pattern Recognition in mathematical and computational contexts.

@@ -77,7 +77,7 @@ The program should serve as a basic implementation, that can be optimized for va
 
 ## Acknowledgements
 
-Dr. Ravi
+Dr. Ravi <br>
 Sonoma State University
 
 ## License

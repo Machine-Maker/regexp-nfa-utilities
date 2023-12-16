@@ -1,8 +1,5 @@
 # regexp-nfa-utilities
 
-A Project to parse a simplified Regular Expression into an NFA data structure and convert to epsilon-free NFA.
-It provides an interface for testing of string memberships in the Language defined by a Regular Expression.
-
 **How It Works**:
 Epsilon NFA is created with State, transition, and symbol information based on construction algorithim. The state information is then processed iteratively to remove epsilon transitions into a deterministic model for string membership testing.
 
@@ -70,3 +67,6 @@ Dr. Ravi
 ## License
 
 This project uses the MIT Open Source License.
+=======
+Design Doc - Probably not that useful
+https://docs.google.com/document/d/1tWiAd6sdG_nlba4SMwqguRaVR073G5wQG7L6K2hbgPU/edit

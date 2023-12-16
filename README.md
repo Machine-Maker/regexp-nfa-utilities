@@ -1,7 +1,9 @@
-# regexp-nfa-utilities
+<img width="846" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/3eea47f7-f253-4b83-bdf9-032a4828a3bf"># regexp-nfa-utilities
 
 A Project to parse a simplified Regular Expression into an NFA data structure and convert to epsilon-free NFA.
 It provides an interface for testing of string memberships in the Language defined by a Regular Expression.
+
+<img width="846" alt="image" src="https://github.com/Machine-Maker/regexp-nfa-utilities/assets/18277544/e545426b-ca0c-4cdc-a722-ca8bd639f0d6">
 
 **How It Works**:
 Epsilon NFA is created with State, transition, and symbol information based on construction algorithim. The state information is then processed iteratively to remove epsilon transitions into a deterministic model for string membership testing.

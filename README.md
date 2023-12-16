@@ -31,7 +31,7 @@ Before you begin, ensure you have met the following requirements:
 operators: '*', '.', '∪', and '∩'
 literals characters: all alphanumerics
 
-Important: Concatenation must be indicated with a .
+Important: Concatenation may be indicated with a . or implied
 
 Example:
 (a ∪ b)*.a.b.b

@@ -1,1 +1,1 @@
-No tests for intersection written.
+

@@ -74,6 +74,8 @@ This page is the repository for our final project for CS: 454 - Theory of Automa
 ## Runtime/Algorithim Information
 The program should serve as a basic implementation, that can be optimized for various purposes specific to the languages being represented. For example; adding string pre-processing, indexing into certain parts of the NFA, and lazy construction are example methods to be of use for certain pattern-matching applications.
 
+Kleene’s Theorem asserts that for every regular expression, there is an equivalent deterministic finite automaton (DFA), and vice versa. The construction of a DFA for RegEx gives us a linear runtime algorithm to test for string membership in a regular expression but it suffers from a potential exponential size increase in the number of states when constructed from complex regular expressions. The more practical NFA-based approach, as demonstrated in our coursework and from the source text, Introduction to Theory of Computation (Sipzer), is the implementation of the algorithm we utilized to test strings.
+
 ## Acknowledgements
 
 Dr. Ravi <br>
